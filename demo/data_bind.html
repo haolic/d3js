@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>data_bind</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            数据绑定: <br> 数据集.data() // 绑定一个数据到数据集上<br> 数据集.datam() // 绑定一个数组到选择集上，数组的各项值分别与选择集的各元素绑定
+        </div>
+        <hr>
+        <div>
+            <p></p>
+            <p></p>
+            <p></p>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        let str = "我是数据";
+        let p = d3.selectAll("p");
+        p.datum(str);
+        p.text((d, i) => `我是第${i}个p标记,用datum()绑定的数据是:${d}`);
+
+        let arr = [1, 2, 3, 4, 5];
+        d3.selectAll("li").data(arr)
+            .text((d, i) => `我是第${i}个li标记,用data()绑定的数据是:${d}`);
+    </script>
+</body>
+
+</html>

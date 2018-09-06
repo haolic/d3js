@@ -6,16 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>my-d3js</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div>
-        hello, world!
+    <div class="container">
+        <div>
+            hello, world!
+        </div>
+        <div id="pWrap">
+        </div>
+        <div class="link-wrap">
+            <a href="/">hello world</a>
+            <a href="/demo/data_bind.html">数据绑定</a>
+        </div>
     </div>
-    <div id="pWrap">
 
-    </div>
-    <script src="/js/d3.js"></script>
+    <script src="/demo/js/d3.js"></script>
     <script>
         let pWrap = d3.select("#pWrap");
         pWrap.selectAll('p')
