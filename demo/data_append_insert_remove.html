@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据插入,删除</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            数据插入,删除:
+            <p>数据插入: append() / insert()</p>
+            <p>数据删除: remove()</p>
+        </div>
+        <hr>
+        <div id="workspace">
+            <div id="div1">我是div1</div>
+            <div id="div2">我是div2</div>
+        </div>
+        <button id="delete">点击删除div2</button>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        let workspace = d3.select("#workspace");
+        workspace.append("p").text("我是用append()在尾部插入的p");
+        workspace.insert("p", "#div1").text("我是用insert()在div1前面插入的p");
+        let button = document.getElementById("delete");
+        button.addEventListener("click", () => {
+            let div2 = workspace.select("#div2");
+            div2.remove();
+            button.setAttribute('disabled', true);
+            button.setAttribute("class", "disabled")
+        })
+    </script>
+</body>
+
+</html>

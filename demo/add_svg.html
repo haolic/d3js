@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>画图了,svg</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div id="workspace" style="height: 300px">
+
+        </div>
+        <button id="add">点击添加svg</button>
+        <button id="addCol">点击添加竖柱状图</button>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const width = 300;
+        const height = 300;
+        const add = document.getElementById("add");
+        const addCol = document.getElementById("addCol");
+        add.addEventListener("click", () => {
+            const svg = d3.select("#workspace")
+                .append("svg").attr("width", width).attr("height", height);
+            const dataset = [150, 250, 200, 130, 50]; // 数据集, 矩形宽度.
+            const ractHeight = 15;
+            svg.selectAll("rect")
+                .data(dataset).enter().append('rect')
+                .attr("x", 20)
+                .attr("y", (d, i) => i * ractHeight)
+                .attr("width", d => d)
+                .attr('height', ractHeight - 2)
+                .attr("fill", "#663399");
+            add.setAttribute("class", "disabled");
+            add.setAttribute("disabled", true)
+        })
+        addCol.addEventListener("click", () => {
+            const svg = d3.select("#workspace").append("svg")
+                .attr("width", 300)
+                .attr("height", 300);
+            const dataset = [20, 50, 299, 150, 240, 200];
+            const ractWidth = 15;
+            svg.selectAll("rect").data(dataset).enter().append("rect")
+                .attr("x", (d, i) => i * 15).attr("y", d => 300 - d)
+                .attr("width", ractWidth - 2)
+                .attr("height", d => d)
+                .attr("fill", "red");
+
+            addCol.setAttribute("class", "disabled");
+            addCol.setAttribute("disabled", true)
+        })
+    </script>
+</body>
+
+</html>
