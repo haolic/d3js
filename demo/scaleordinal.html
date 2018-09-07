@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>序数比例尺</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            序数比例尺: scaleOrdinal<br>
+            <p>
+                <code>
+                    var index = [0, 1, 2, 3, 4];<br>
+                    var color = ["red", "blue", "green", "yellow", "black"];
+                </code>
+            </p>
+            <p>
+                如果希望0对应red, 1对应blue, 依次类推, 这些值都是离散的，线性比例尺不适合，需要用到序数比例尺。
+            </p>
+            <p>
+                <code>
+                    d3.scale.ordinal()
+                </code>在新版d3中为<code>
+                    d3.scaleOrdinal();
+                </code>
+            </p>
+        </div>
+        <hr>
+        <div id="workspace">
+
+        </div>
+        <hr>
+        <div>
+
+        </div>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const index = [1, 2, 3, 4, 5];
+        const color = ["red", "blue", "green", "yellow", "black"];
+        const scaleOrdinal = d3.scaleOrdinal();
+        scaleOrdinal.domain(index).range(color);
+
+        console.log(scaleOrdinal(1));
+        console.log(scaleOrdinal(2));
+        console.log(scaleOrdinal(3));
+        console.log(scaleOrdinal(4));
+
+        d3.select("#workspace").selectAll("p").data(index)
+            .enter().append("p").html(d => `${d} ==> <span style="background: ${scaleOrdinal(d)}; padding: 0 2px; color: #fff;">${scaleOrdinal(d)}</span>`);
+    </script>
+
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
+    </script>
+</body>
+
+</html>
