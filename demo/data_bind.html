@@ -29,7 +29,7 @@
         </div>
         <a href="/" class="go-home">返回home</a>
     </div>
-
+    <div class="mask"></div>
     <script src="./js/d3.js"></script>
     <script>
         let str = "我是数据";
@@ -40,6 +40,13 @@
         let arr = [1, 2, 3, 4, 5];
         d3.selectAll("li").data(arr)
             .text((d, i) => `我是第${i}个li标记,用data()绑定的数据是:${d}`);
+    </script>
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
     </script>
 </body>
 

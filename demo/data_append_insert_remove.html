@@ -24,7 +24,7 @@
         <button id="delete">点击删除div2</button>
         <a href="/" class="go-home">返回home</a>
     </div>
-
+    <div class="mask"></div>
     <script src="./js/d3.js"></script>
     <script>
         let workspace = d3.select("#workspace");
@@ -37,6 +37,13 @@
             button.setAttribute('disabled', true);
             button.setAttribute("class", "disabled")
         })
+    </script>
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
     </script>
 </body>
 

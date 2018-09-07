@@ -47,5 +47,24 @@ button.disabled {
     display: block;
     text-align: center;
     padding : 5px;
-    margin: 15px 200px;
+    margin: 15px auto;
+    width: 380px;
+}
+.mask{
+    opacity: 1;
+    transition: opacity .4s;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    transition: all .2s;
+    z-index: 2;
+}
+.show {
+    opacity: 0;
+}
+.display-none {
+    display: none;
 }

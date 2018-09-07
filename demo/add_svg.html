@@ -18,7 +18,7 @@
         <button id="addCol">点击添加竖柱状图</button>
         <a href="/" class="go-home">返回home</a>
     </div>
-
+    <div class="mask"></div>
     <script src="./js/d3.js"></script>
     <script>
         const width = 300;
@@ -42,8 +42,8 @@
         })
         addCol.addEventListener("click", () => {
             const svg = d3.select("#workspace").append("svg")
-                .attr("width", 300)
-                .attr("height", 300);
+                .attr("width", 400)
+                .attr("height", 400);
             const dataset = [20, 50, 299, 150, 240, 200];
             const ractWidth = 15;
             svg.selectAll("rect").data(dataset).enter().append("rect")
@@ -55,6 +55,13 @@
             addCol.setAttribute("class", "disabled");
             addCol.setAttribute("disabled", true)
         })
+    </script>
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
     </script>
 </body>
 
