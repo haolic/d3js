@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>完整柱形图</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            一个完整的柱形图: 坐标轴,文字,图形,并配合比例尺.
+        </div>
+        <hr>
+        <div id="datasetWrap"></div>
+        <div id="workspace">
+
+        </div>
+        <hr>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        let dataset = [];
+        for (let i = 0; i <= 10; i++) {
+            dataset.push(parseInt((Math.random() * 1000).toFixed(0)));
+        }
+        d3.select("#datasetWrap").selectAll("span")
+            .data(dataset)
+            .enter()
+            .append("span")
+            .text((d, i) => `${d}${i === dataset.length - 1 ? "" : ","} `);
+        
+        const svg = d3.select("#workspace").append("svg")
+            .attr("width", 600)
+            .attr("height", 600)
+            .attr("style", "border: 1px solid #333; border-radius: 2px");
+        const scaleLinear = d3.scaleLinear()
+            .domain([0, d3.max(dataset)])
+            .range([0, 400]);
+        svg.selectAll("rect").data(dataset)
+            .enter().append("rect")
+            .attr() // todo....
+    </script>
+
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
+    </script>
+</body>
+
+</html>

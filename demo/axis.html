@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>坐标轴</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #3399cc;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+            color: #3399cc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+
+        </div>
+        <hr>
+        <div id="workspace">
+
+        </div>
+        <button id="addAxis">点击添加坐标轴</button>
+        <hr>
+        <div>
+
+        </div>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const dataset = [100, 150, 200, 400, 170, 500];
+        const linear = d3.scaleLinear();
+        linear.domain([0, d3.max(dataset)]).range([0, 250]);
+        const svg = d3.select("#workspace").append("svg")
+            .attr("width", 300)
+            .attr("height", 300);
+        svg.selectAll("rect").data(dataset)
+            .enter()
+            .append("rect")
+            .attr("fill", "#99CCFF")
+            .attr("width", d => linear(d))
+            .attr("height", 20)
+            .attr("x", 30)
+            .attr("y", (d, i) => i * 22 + 20);
+        const addAxis = () => {
+            const axis = d3.axisTop()
+                .scale(linear)
+                .ticks(7); // 指定刻度数量.
+            svg.append("g").attr("class", "axis").attr("transform", `translate(30, ${dataset.length * 22 + 40})`).call(axis);
+        };
+        document.getElementById("addAxis").addEventListener("click", addAxis);
+    </script>
+
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
+    </script>
+</body>
+
+</html>
