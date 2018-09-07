@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>柱状图添加比例尺</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+
+        </div>
+        <hr>
+        <div id="workspace">
+
+        </div>
+        <hr>
+        <div>
+
+        </div>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const dataset = [0.9, 2.3, 1.5, 2.0, 3.7, 3.2];
+        const linear = d3.scaleLinear();
+        linear.domain([d3.min(dataset), d3.max(dataset)]).range([10, 300]);
+        const svg = d3.select("#workspace").append("svg")
+            .attr("width", 300)
+            .attr("height", 300);
+        svg.selectAll("rect").data(dataset)
+            .enter()
+            .append("rect")
+            .attr("fill", "#99CCFF")
+            .attr("width", 20)
+            .attr("height", d => linear(d))
+            .attr("x", (d, i) => i * 22)
+            .attr("y", (d) => 300 - linear(d))
+    </script>
+
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
+    </script>
+</body>
+
+</html>

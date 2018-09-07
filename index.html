@@ -13,8 +13,7 @@
     <div class="container">
         <div>   hello, world!
         </div>
-        <div id="pWrap">
-        </div>
+        
         <div class="link-wrap">
             <a href="/">hello world</a>
             <a href="/demo/data_bind.html">数据绑定</a>
@@ -22,18 +21,13 @@
             <a href="/demo/add_svg.html">画svg</a>
             <a href="/demo/scalelinear.html">线性比例尺</a>
             <a href="/demo/scaleordinal.html">序数比例尺</a>
+            <a href="/demo/scale_to_rect.html">柱状图加比例尺</a>
         </div>
     </div>
     <div class="mask"></div>
     <script src="/demo/js/d3.js"></script>
     <script>
-        let pWrap = d3.select("#pWrap");
-        pWrap.selectAll('p')
-            .data([1, 2, 3, 4, 5, 6])
-            .enter().append('p')
-            .text((d) => {
-                return `I'm number ${d} p!`
-            })
+        console.log("hello, world!", "I'm d3", d3);
     </script>
     <script>
         const mask = d3.select(".mask");
