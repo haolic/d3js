@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态图形</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            简单动态效果
+        </div>
+        <hr>
+        <div id="workspace">
+
+        </div>
+        <hr>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const svg = d3.select("#workspace").append("svg")
+            .attr("width", 500)
+            .attr("height", 500);
+        const circle = svg.append("circle")
+            .attr("cx", 100)
+            .attr("cy", 100)
+            .attr("r", 50)
+            .style("fill", "#ccc");
+        let circleAttr = { cx: 100, cy: 100, r: 50 };
+
+        const toggleTransition = () => {
+            circleAttr.cx = circleAttr.cx === 100 ? 300 : 100;
+            circleAttr.cy = circleAttr.cy === 100 ? 300 : 100;
+            circleAttr.r = circleAttr.r === 50 ? 100 : 50;
+            circle.transition()
+                .duration(1000)
+                .ease(d3.easeBounce) // 旧版本d3中写法为.ease("bounce")
+                .attr("cx", circleAttr.cx)
+                .attr("cy", circleAttr.cy)
+                .attr("r", circleAttr.r)
+            setTimeout(() => {
+                toggleTransition()
+            }, 2000)
+        };
+        toggleTransition();
+
+    </script>
+
+    <script>
+        const mask = d3.select(".mask");
+        mask.attr("class", "mask show");
+        setTimeout(() => {
+            mask.attr("class", "mask display-none");
+        }, 400)
+    </script>
+</body>
+
+</html>
