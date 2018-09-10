@@ -60,13 +60,24 @@
             .domain([0, max])
             .range([0, height - padding.top - padding.bottom]);
 
-        svg.selectAll("rect").data(dataset) // 创建图形柱.
+        svg.selectAll("rect").data(dataset) // 创建并添加图形柱.
             .enter().append("rect")
             .attr("width", barWidth)
             .attr("height", d => yDataScale(d))
             .attr("x", (d, i) => i * ((width - padding.left - padding.right) / (dataset.length)) + padding.left)
-            .attr("y", d => 600 - yDataScale(d) - padding.bottom)
+            .attr("y", d => height - yDataScale(d) - padding.bottom)
             .attr("fill", "#6d3353");
+
+        svg.append("g") // 创建并添加柱状图文字.
+            .selectAll("text")
+            .data(dataset)
+            .enter().append("text")
+            .text(d => d)
+            .attr("fill", "#00ccaa")
+            .attr("x", (d, i) => d < 100 ? d < 10 ? padding.left + xScale(i) + 19 : padding.left + xScale(i) + 16 : padding.left + xScale(i) + 11)
+            .attr("y", (d, i) => d >= 40 ? height - yDataScale(d) : height - yDataScale(d) - 25)
+
+
 
         const xAxis = d3.axisBottom() // X轴.
             .scale(xScale)
