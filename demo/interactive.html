@@ -9,14 +9,14 @@
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
     <meta HTTP-EQUIV="expires" CONTENT="0">
-    <title>加动画的完整柱形图</title>
+    <title>交互图表</title>
     <link href="/demo/css/index.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="container">
         <div>
-            带动画的柱状图.
+            一个完整的柱形图: 坐标轴,文字,图形,并配合比例尺.
         </div>
         <hr>
         <div id="datasetWrap"></div>
@@ -63,6 +63,7 @@
 
         const rects = svg.selectAll("rect").data(dataset) // 创建并添加图形柱.
             .enter().append("rect")
+            .attr("class", "bar-rect")
             .attr("width", barWidth)
             .attr("height", 0)
             .attr("x", (d, i) => i * ((width - padding.left - padding.right) / (dataset.length)) + padding.left)
@@ -94,44 +95,17 @@
             .call(xAxis)
             .attr("transform", `translate(33, ${height - padding.top})`);
 
-        const reDraw = () => {
-            let newDataset = [];
-            for (let i = 0; i < 10; i++) {
-                newDataset.push(parseInt((Math.random() * 1000).toFixed(0)));
-            }
-            const newYDataScale = d3.scaleLinear() // 创建y数据比例尺.
-                .domain([0, d3.max(newDataset)])
-                .range([0, height - padding.top - padding.bottom]);
-            const newYScale = d3.scaleLinear() // 创建y轴比例尺.
-                .domain([0, d3.max(newDataset)])
-                .range([height - padding.top - padding.bottom, 0]);
-            const newYAxis = d3.axisLeft() // Y轴.
-                .scale(newYScale)
-                .ticks(10);
-            svg.select(".y-axis").remove();
-            datasetWrap
-                .data(newDataset)
-                .text((d, i) => `${d}${i === newDataset.length - 1 ? "" : ","} `);
-            svg.append("g")
-                .call(newYAxis)
-                .attr("class", "y-axis")
-                .attr("transform", `translate(33, ${padding.top})`);
-
-            rects.data(newDataset).transition()
-                .duration(750)
-                .ease(d3.easePolyOut)
-                .attr("height", d => newYDataScale(d))
-                .attr("y", d => height - newYDataScale(d) - padding.bottom);
-
-            texts.data(newDataset).transition()
-                .text(d => d)
-                .duration(750)
-                .ease(d3.easePolyOut)
-                .attr("x", (d, i) => d < 100 ? d < 10 ? padding.left + xScale(i) + 19 : padding.left + xScale(i) + 16 : padding.left + xScale(i) + 11)
-                .attr("y", (d, i) => d >= 40 ? height - newYDataScale(d) : height - newYDataScale(d) - 25);
-            setTimeout(reDraw, 2000);
-        };
-        setTimeout(reDraw, 2000);
+        d3.selectAll(".bar-rect")
+            .on("mouseover", (d, i) => {
+                const e = d3.event;
+                d3.select(e.target)
+                    .attr("fill", "#d6332c")
+            })
+            .on("mouseout", () => {
+                const e = d3.event;
+                d3.select(e.target)
+                    .attr("fill", "#333")
+            })
     </script>
 
     <script>
