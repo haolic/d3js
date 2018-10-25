@@ -41,13 +41,7 @@
         d3.selectAll("li").data(arr)
             .text((d, i) => `我是第${i}个li标记,用data()绑定的数据是:${d}`);
     </script>
-    <script>
-        const mask = d3.select(".mask");
-        mask.attr("class", "mask show");
-        setTimeout(() => {
-            mask.attr("class", "mask display-none");
-        }, 400)
-    </script>
+    <script src="./js/public.js"></script>
 </body>
 
 </html>
