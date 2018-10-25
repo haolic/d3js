@@ -1,7 +1,7 @@
-const mask = document.querySelector(".mask");
-setTimeout(() => {
+window.addEventListener("load", () => {
+  const mask = document.querySelector(".mask");
   mask.classList.add("show");
+  setTimeout(() => {
+    mask.classList.replace("show", "display-none");
+  }, 400);
 });
-setTimeout(() => {
-  mask.classList.replace("show", "display-none");
-}, 400);

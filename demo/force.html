@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <title>力导向图</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+    <style>
+        #datasetWrap {
+            border: 1px solid #f90;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 8px;
+        }
+
+        #datasetWrap2 {
+            border: 1px solid #90f;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            一个力导向图.
+        </div>
+        <hr>
+        <div id="datasetWrap"></div>
+        <div id="datasetWrap2"></div>
+        <div id="workspace">
+
+        </div>
+        <hr>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const nodes = [];
+        const edges = [];
+        const count = Math.round(Math.random() * (40) + 10);
+        /*
+        randomWord 产生任意长度随机字母数字组合
+        randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+        */
+        const randomWord = (randomFlag, min, max) => {
+            var str = "",
+                range = min,
+                arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            // 随机产生
+            if (randomFlag) {
+                range = Math.round(Math.random() * (max - min)) + min;
+            }
+            for (var i = 0; i < range; i++) {
+                pos = Math.round(Math.random() * (arr.length - 1));
+                str += arr[pos];
+            }
+            return str;
+        }
+        for (let i = 0; i < count; i++) {
+            nodes.push({ name: randomWord(false, 8) })
+        }
+        for (let i = 0; i < count - 1; i++) {
+            edges.push({
+                source: Math.round(Math.random() * 6),
+                target: Math.round(Math.random() * (count - 1))
+            })
+        }
+
+        console.log(edges)
+        d3.select("#datasetWrap").text(JSON.stringify(nodes));
+        d3.select("#datasetWrap2").text(JSON.stringify(edges))
+        const ticked = () => {
+            svg_edges.attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            svg_texts.attr("x", d => { return (d.source.x + d.target.x) / 2 })
+                .attr("y", d => { return (d.source.y + d.target.y) / 2 });
+
+        }
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink())
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceCenter());
+        simulation.nodes(nodes)
+            .on("tick", ticked);
+        simulation.force("link").links(edges);
+        simulation.force("center").x(350).y(250);
+
+        console.log(simulation)
+        console.log(nodes);
+        const svg = d3.select("#workspace")
+            .append("svg")
+            .style("width", 700)
+            .style("height", 500)
+            .style("border", "1px solid #90f")
+            .style("border-radius", "4px");
+
+        const svg_edges = svg.selectAll("line")
+            .data(edges)
+            .enter()
+            .append("line")
+            .style("stroke", "#ccc")
+            .style("stroke-width", 1);
+        const color = d3.scaleOrdinal(d3.schemePaired);
+        
+        const svg_texts = svg.selectAll("text")
+            .data(edges)
+            .enter()
+            .append('text')
+            .style("fill", "#666")
+            .attr("dx", 20)
+            .attr("dy", 8)
+            .text(d => d.name)
+    </script>
+    <script src="./js/public.js"></script>
+</body>
+
+</html>
