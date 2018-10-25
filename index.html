@@ -13,7 +13,7 @@
     <div class="container">
         <div>   hello, world!
         </div>
-        
+
         <div class="link-wrap">
             <a href="/">hello world</a>
             <a href="/demo/data_bind.html">数据绑定</a>
@@ -32,13 +32,15 @@
     <div class="mask"></div>
     <script src="/demo/js/d3.js"></script>
     <script>
-        console.log("hello, world!", "I'm d3", d3);
+        console.log("%chello, world! I'm d3", "background: #000;font-size: 18px;color: #fff", d3);
     </script>
     <script>
-        const mask = d3.select(".mask");
-        mask.attr("class", "mask show");
+        const mask = document.querySelector(".mask");
         setTimeout(() => {
-            mask.attr("class", "mask display-none");
+            mask.classList.add("show")
+        });
+        setTimeout(() => {
+            mask.classList.replace("show", "display-none");
         }, 400)
     </script>
 </body>

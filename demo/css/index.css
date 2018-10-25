@@ -54,7 +54,6 @@ button.disabled {
 }
 .mask {
   opacity: 1;
-  transition: opacity;
   position: absolute;
   top: 0;
   bottom: 0;
