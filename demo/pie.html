@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>饼状图</title>
+    <link href="/demo/css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            一个饼状图.
+        </div>
+        <hr>
+        <div id="datasetWrap"></div>
+        <div id="workspace">
+
+        </div>
+        <hr>
+        <a href="/" class="go-home">返回home</a>
+    </div>
+    <div class="mask"></div>
+
+    <script src="./js/d3.js"></script>
+    <script>
+        const dataset = [];
+        for (let i = 0; i < 5; i++) {
+            dataset.push(Math.round(Math.random() * (90) + 10))
+        }
+        document.querySelector("#datasetWrap").innerHTML = dataset;
+        const pie = d3.pie();
+        const pieData = pie(dataset);
+        console.log(pieData)
+        const outerRadius = 150;
+        const innerRadius = 0;
+
+        const arc = d3.arc()
+            .innerRadius(innerRadius)
+            .outerRadius(outerRadius);
+        const svg = d3.select("#workspace").append("svg")
+            .attr("width", 300)
+            .attr("height", 300);
+        const arcs = svg.selectAll("g")
+            .data(pieData)
+            .enter()
+            .append("g")
+            .attr("transform", "translate(150, 150)");
+        const color = d3.scaleOrdinal(d3.schemeSet2);
+        arcs.append("path")
+            .attr("fill", (d, i) => color(i))
+            .attr("d", d => arc(d));
+        arcs.append("text")
+            .attr("transform", d => "translate(" + arc.centroid(d) + ")")
+            .attr("text-anchor", "middle")
+            .attr("fill", "#fff")
+            .text(d => d.data)
+    </script>
+    <script src="./js/public.js"></script>
+</body>
+
+</html>
