@@ -47,6 +47,7 @@
         const nodes = [];
         const edges = [];
         const count = Math.round(Math.random() * (100) + 10);
+        // const count = 30;
         /*
         randomWord 产生任意长度随机字母数字组合
         randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
@@ -66,12 +67,12 @@
             return str;
         }
         for (let i = 0; i < count; i++) {
-            nodes.push({ name: randomWord(false, 4) })
+            nodes.push({ name: i })
         }
         for (let i = 0; i < count - 1; i++) {
             edges.push({
-                source: Math.round(Math.random() * 6),
-                target: Math.round(Math.random() * (count - 1))
+                source: Math.round(Math.random() * 5),
+                target: Math.floor(Math.random() * (count - 1))
             })
         }
 
@@ -176,6 +177,7 @@
         // forceSimulation.force("link").links(edges)
         //     .distance(50);
         // forceSimulation.force("center").x(350).y(250);
+
         var g = svg.append("g")
             .attr("transform", "translate(" + margin.top + "," + margin.left + ")");
         var colorScale = d3.scaleOrdinal()
@@ -278,7 +280,7 @@
         }
         function started(d) {
             if (!d3.event.active) {
-                forceSimulation.alphaTarget(0.8).restart();
+                forceSimulation.alphaTarget(0.9).restart();
             }
             d.fx = d.x;
             d.fy = d.y;
