@@ -67,12 +67,14 @@
             return str;
         }
         for (let i = 0; i < count; i++) {
-            nodes.push({ name: i })
+            nodes.push({ name: i, value: Math.round(Math.random() * 20 + 3)})
         }
         for (let i = 0; i < count - 1; i++) {
             edges.push({
-                source: Math.round(Math.random() * 5),
-                target: Math.floor(Math.random() * (count - 1))
+                source: Math.round(Math.random() * 2),
+                // target: Math.floor(Math.random() * (count - 1))
+                target: i + 1,
+                value: Math.round(Math.random() * 200)
             })
         }
 
@@ -198,7 +200,7 @@
         forceSimulation.force("link")
             .links(edges)
             .distance(function (d) {//每一边的长度
-                return 150;
+                return d.value;
             })
         //设置图形的中心位置	
         forceSimulation.force("center")
@@ -247,7 +249,9 @@
 
         //绘制节点
         gs.append("circle")
-            .attr("r", 10)
+            .attr("r", function (d, i) {
+                return d.value;
+            })
             .attr("fill", function (d, i) {
                 return colorScale(i);
             })

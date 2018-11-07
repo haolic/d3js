@@ -55,7 +55,7 @@
         console.log(scaleOrdinal(4));
 
         d3.select("#workspace").selectAll("p").data(index)
-            .enter().append("p").html(d => `${d} ==> <span style="background: ${scaleOrdinal(d)}; padding: 0 2px; color: #fff;">${scaleOrdinal(d)}</span>`);
+            .enter().append("p").html(d => `${d} ==> <span style="background: ${scaleOrdinal(d)}; padding: 0 2px; color: ${scaleOrdinal(d) === "yellow" ? "#666" : "#fff"};">${scaleOrdinal(d)}</span>`);
     </script>
     <script src="./js/public.js"></script>
 </body>
